@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jojo's Cares 🌸 — Your Home in Loving Hands</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schoolbell&family=Indie+Flower&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   ROOT & RESET
+============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --sky: #EAF4FB;
+  --cream: #FEF9F0;
+  --pink: #F7C5D0;
+  --mint: #B8E8D0;
+  --yellow: #FDE68A;
+  --lavender: #DDD0F0;
+  --coral: #F9A89A;
+  --brown: #4A2E2E;
+  --brown-light: #7A5A5A;
+  --mint-bg: #E8F7F0;
+  --font-heading: 'Schoolbell', cursive;
+  --font-sub: 'Indie Flower', cursive;
+  --font-body: 'Nunito', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  color: var(--brown);
+  background: var(--sky);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ============================================================
+   CUSTOM CURSOR
+============================================================ */
+#cursor {
+  width: 28px; height: 28px;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease;
+}
+
+/* ============================================================
+   SCROLLBAR
+============================================================ */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--pink); border-radius: 10px; border: 2px solid var(--cream); }
+::-webkit-scrollbar-thumb:hover { background: var(--coral); }
+
+/* ============================================================
+   NAV — BUNTING BANNER
+============================================================ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: var(--cream);
+  border-bottom: 3px solid var(--pink);
+  padding: 0 2rem;
+  box-shadow: 0 4px 20px rgba(247,197,208,0.4);
+}
+
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 0;
+}
+
+.nav-logo {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  color: var(--brown);
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+
+/* Bunting pennants */
+.bunting {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  position: absolute;
+  bottom: 0;
+  left: 0; right: 0;
+  height: 22px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+}
+
+.nav-links a {
+  font-family: var(--font-sub);
+  font-size: 1rem;
+  color: var(--brown);
+  text-decoration: none;
+  padding: 0.35rem 0.9rem;
+  border-radius: 20px;
+  transition: background 0.25s, transform 0.2s;
+  white-space: nowrap;
+}
+
+.nav-links a:hover {
+  background: var(--pink);
+  transform: rotate(-2deg) scale(1.05);
+}
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+  background: none;
+  border: none;
+}
+.hamburger span {
+  display: block;
+  width: 26px; height: 3px;
+  background: var(--brown);
+  border-radius: 3px;
+  transition: all 0.3s;
+}
+
+@media (max-width: 680px) {
+  .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; right: 0; background: var(--cream); padding: 1rem; border-radius: 0 0 16px 16px; box-shadow: 0 8px 24px rgba(74,46,46,0.1); min-width: 180px; border: 2px solid var(--pink); border-top: none; }
+  .nav-links.open { display: flex; }
+  .hamburger { display: flex; }
+}
+
+/* ============================================================
+   SECTION DIVIDERS (wavy SVG)
+============================================================ */
+.divider {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  margin-top: -2px;
+}
+.divider svg { display: block; width: 100%; height: 70px; }
+
+/* ============================================================
+   HERO
+============================================================ */
+#hero {
+  min-height: 100vh;
+  background: linear-gradient(175deg, var(--sky) 0%, #D8EEF9 40%, var(--cream) 100%);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 2rem 80px;
+  overflow: hidden;
+}
+
+.hero-content {
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+
+.hero-title {
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 10vw, 6.5rem);
+  color: var(--brown);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  animation: floatIn 0.9s ease both;
+}
+
+.hero-tagline {
+  font-family: var(--font-sub);
+  font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+  color: var(--brown-light);
+  margin-bottom: 2.5rem;
+  animation: floatIn 0.9s 0.2s ease both;
+}
+
+.cta-wrap {
+  display: inline-block;
+  position: relative;
+  animation: floatIn 0.9s 0.4s ease both;
+}
+
+.cta-btn {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  color: var(--brown);
+  background: var(--yellow);
+  padding: 0.9rem 2.4rem;
+  border-radius: 12px;
+  text-decoration: none;
+  border: 3px solid #d4b060;
+  box-shadow: 5px 6px 0 #d4b060, 5px 6px 0 2px rgba(74,46,46,0.15);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: none;
+  position: relative;
+}
+
+.cta-btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 3px 0 #d4b060;
+}
+
+/* bouncing star near CTA */
+.cta-star {
+  position: absolute;
+  right: -38px;
+  top: -10px;
+  animation: bounce 1.2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(15deg); }
+}
+
+/* Floating hero SVG elements */
+.hero-float {
+  position: absolute;
+  pointer-events: none;
+}
+
+.float-flower-big { bottom: 12%; left: 6%; animation: bobble 5s ease-in-out infinite; }
+.float-sun { top: 12%; right: 8%; animation: bobble 6s 1s ease-in-out infinite; }
+.float-rainbow { bottom: 20%; right: 5%; animation: bobble 7s 0.5s ease-in-out infinite; }
+.float-daisy1 { top: 18%; left: 10%; animation: bobble 4.5s 0.3s ease-in-out infinite; }
+.float-daisy2 { top: 30%; right: 20%; animation: bobble 5.5s 1.2s ease-in-out infinite; }
+.float-star1 { top: 8%; left: 30%; animation: bobble 4s 0.7s ease-in-out infinite; }
+.float-cloud1 { top: 15%; left: 22%; animation: bobble 8s ease-in-out infinite; }
+.float-cloud2 { top: 10%; right: 28%; animation: bobble 9s 2s ease-in-out infinite; }
+.float-moon { bottom: 28%; left: 20%; animation: bobble 6.5s 0.8s ease-in-out infinite; }
+
+/* Butterflies drifting */
+.butterfly {
+  position: absolute;
+  pointer-events: none;
+  animation: driftAcross 18s linear infinite;
+  opacity: 0.7;
+}
+.butterfly:nth-child(1) { top: 25%; animation-duration: 20s; animation-delay: 0s; }
+.butterfly:nth-child(2) { top: 55%; animation-duration: 16s; animation-delay: -7s; }
+.butterfly:nth-child(3) { top: 40%; animation-duration: 23s; animation-delay: -12s; }
+
+@keyframes driftAcross {
+  0%   { left: -80px; transform: scaleX(1) rotate(-5deg); }
+  48%  { transform: scaleX(1) rotate(5deg); }
+  50%  { transform: scaleX(-1) rotate(-5deg); }
+  100% { left: calc(100vw + 80px); transform: scaleX(-1) rotate(5deg); }
+}
+
+@keyframes bobble {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+@keyframes floatIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   ABOUT
+============================================================ */
+#about {
+  background: var(--cream);
+  padding: 80px 2rem 90px;
+  position: relative;
+}
+
+.section-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: var(--font-sub);
+  font-size: 1rem;
+  color: var(--coral);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.section-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  color: var(--brown);
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.about-text {
+  font-size: 1.1rem;
+  line-height: 1.9;
+  color: var(--brown-light);
+  max-width: 680px;
+  margin-bottom: 3rem;
+}
+
+/* Badge string */
+.badge-string-wrap {
+  position: relative;
+  padding: 1rem 0 0.5rem;
+}
+
+.badge-string-line {
+  position: absolute;
+  top: 20px;
+  left: 0; right: 0;
+  height: 3px;
+  background: repeating-linear-gradient(90deg, #c9a96e 0, #c9a96e 8px, transparent 8px, transparent 14px);
+  border-radius: 2px;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.2rem;
+  position: relative;
+  z-index: 2;
+  padding-top: 1.8rem;
+}
+
+.badge {
+  font-family: var(--font-sub);
+  font-size: 1rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  position: relative;
+  box-shadow: 3px 4px 0 rgba(74,46,46,0.12);
+  transform: rotate(-1.5deg);
+  transition: transform 0.25s, box-shadow 0.25s;
+  cursor: default;
+  /* pin top */
+  margin-top: 10px;
+}
+.badge::before {
+  content: '';
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 20px;
+  background: #c9a96e;
+}
+.badge::after {
+  content: '';
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #b8865e;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.badge:hover { transform: rotate(0deg) scale(1.07); box-shadow: 5px 6px 0 rgba(74,46,46,0.15); }
+
+.badge:nth-child(1) { background: var(--mint); transform: rotate(-2deg); }
+.badge:nth-child(2) { background: var(--pink); transform: rotate(1.5deg); }
+.badge:nth-child(3) { background: var(--yellow); transform: rotate(-1deg); }
+.badge:nth-child(4) { background: var(--lavender); transform: rotate(2deg); }
+.badge:nth-child(5) { background: var(--sky); transform: rotate(-1.5deg); }
+.badge:nth-child(6) { background: var(--coral); transform: rotate(1deg); }
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* Tiny scattered flowers background for about */
+.bg-flowers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.25;
+}
+
+/* ============================================================
+   SERVICES
+============================================================ */
+#services {
+  background: var(--mint-bg);
+  padding: 80px 2rem 90px;
+  position: relative;
+  overflow: hidden;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2.5rem;
+  margin-top: 3rem;
+}
+
+.service-card {
+  background: var(--cream);
+  border-radius: 16px;
+  padding: 2rem 1.8rem 2rem;
+  position: relative;
+  /* torn paper look */
+  box-shadow: 4px 6px 0 rgba(74,46,46,0.1), 0 0 0 3px rgba(74,46,46,0.06);
+  transform: rotate(-1.5deg);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 2.5px dashed #c9b99a;
+  overflow: visible;
+}
+.service-card:nth-child(2) { transform: rotate(1deg); }
+.service-card:nth-child(3) { transform: rotate(-0.8deg); }
+
+.service-card:hover {
+  transform: rotate(0deg) scale(1.04) translateY(-4px) !important;
+  box-shadow: 8px 12px 0 rgba(74,46,46,0.13);
+}
+
+/* Corner flower doodles */
+.service-card::before, .service-card::after {
+  content: '✿';
+  position: absolute;
+  font-size: 1.2rem;
+  color: var(--coral);
+  opacity: 0.55;
+}
+.service-card::before { top: 8px; left: 12px; }
+.service-card::after { bottom: 8px; right: 12px; }
+
+.service-icon { font-size: 2.8rem; margin-bottom: 0.8rem; display: block; }
+.service-name { font-family: var(--font-heading); font-size: 1.7rem; color: var(--brown); margin-bottom: 0.2rem; }
+.service-price { font-family: var(--font-sub); font-size: 1.15rem; color: var(--coral); margin-bottom: 0.8rem; font-weight: bold; }
+.service-desc { font-size: 0.95rem; color: var(--brown-light); line-height: 1.7; }
+
+/* Stars background for services */
+.stars-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.2;
+}
+
+/* ============================================================
+   CALENDAR
+============================================================ */
+#availability {
+  background: var(--cream);
+  padding: 80px 2rem 90px;
+  position: relative;
+}
+
+.calendar-wrap {
+  background: #fff;
+  border-radius: 20px;
+  border: 3px solid var(--pink);
+  overflow: hidden;
+  box-shadow: 5px 8px 0 rgba(247,197,208,0.5);
+  margin-top: 2.5rem;
+  max-width: 700px;
+}
+
+.cal-header {
+  background: var(--pink);
+  padding: 1.2rem 1.5rem;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  color: var(--brown);
+  letter-spacing: 1px;
+  position: relative;
+}
+.cal-header::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 0; right: 0;
+  height: 3px;
+  background: repeating-linear-gradient(90deg, var(--coral) 0, var(--coral) 10px, var(--yellow) 10px, var(--yellow) 20px, var(--mint) 20px, var(--mint) 30px);
+}
+
+.cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: #fff8f5;
+  border-bottom: 2px solid var(--pink);
+}
+.cal-weekday {
+  text-align: center;
+  padding: 0.7rem 0.3rem;
+  font-family: var(--font-sub);
+  font-size: 0.85rem;
+  color: var(--brown-light);
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  padding: 0.8rem;
+  background: #fff;
+}
+
+.cal-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-family: var(--font-sub);
+  font-size: 0.95rem;
+  color: var(--brown);
+  cursor: default;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-height: 40px;
+  position: relative;
+}
+.cal-day.empty { background: transparent; }
+.cal-day.available { background: var(--mint); }
+.cal-day.booked { background: var(--coral); color: #fff; }
+.cal-day.tentative { background: var(--yellow); }
+.cal-day.today { outline: 2.5px solid var(--brown); outline-offset: -2px; }
+.cal-day:not(.empty):hover { transform: scale(1.15); box-shadow: 0 4px 12px rgba(0,0,0,0.12); z-index: 2; }
+
+.cal-legend {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0.8rem 1rem;
+  border-top: 2px dashed var(--pink);
+  background: #fffaf8;
+  font-family: var(--font-sub);
+  font-size: 0.88rem;
+  color: var(--brown-light);
+}
+.legend-dot {
+  width: 14px; height: 14px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+/* Inquiry form — notepad */
+.form-wrap {
+  margin-top: 3rem;
+  max-width: 700px;
+  background: #FFFDF5;
+  border-radius: 4px 4px 20px 20px;
+  box-shadow: 3px 6px 20px rgba(74,46,46,0.08);
+  overflow: hidden;
+  position: relative;
+}
+.form-top-bar {
+  height: 28px;
+  background: var(--coral);
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  gap: 6px;
+}
+.form-ring { width: 14px; height: 14px; border-radius: 50%; border: 2.5px solid rgba(255,255,255,0.7); }
+.form-inner { padding: 1.8rem 2rem 2rem; position: relative; }
+/* lined notebook effect */
+.form-inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(transparent, transparent 34px, #e8dfd4 34px, #e8dfd4 35px);
+  pointer-events: none;
+  border-radius: 0 0 20px 20px;
+}
+.form-title { font-family: var(--font-heading); font-size: 1.6rem; color: var(--brown); margin-bottom: 1.4rem; position: relative; z-index: 1; }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+@media (max-width: 560px) { .form-row { grid-template-columns: 1fr; } }
+
+.form-group { margin-bottom: 1rem; position: relative; z-index: 1; }
+.form-group label {
+  display: block;
+  font-family: var(--font-sub);
+  font-size: 0.9rem;
+  color: var(--brown-light);
+  margin-bottom: 0.3rem;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  background: rgba(255,255,255,0.75);
+  border: 2px solid var(--pink);
+  border-radius: 10px;
+  padding: 0.6rem 0.9rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--brown);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--coral);
+  box-shadow: 0 0 0 3px rgba(249,168,154,0.2);
+}
+.form-group textarea { resize: vertical; min-height: 90px; }
+
+.submit-btn {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  background: var(--mint);
+  color: var(--brown);
+  border: 3px solid #7ec4a8;
+  border-radius: 40px;
+  padding: 0.75rem 2.5rem;
+  cursor: none;
+  box-shadow: 4px 5px 0 #7ec4a8;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative; z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.submit-btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 3px 0 #7ec4a8;
+}
+
+.success-msg {
+  display: none;
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: var(--brown);
+  text-align: center;
+  padding: 2rem;
+  position: relative; z-index: 1;
+  animation: floatIn 0.5s ease;
+}
+
+/* ============================================================
+   TESTIMONIALS
+============================================================ */
+#testimonials {
+  background: var(--sky);
+  padding: 80px 2rem 90px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Garland string */
+.garland {
+  position: relative;
+  margin-bottom: 3rem;
+}
+.garland-line {
+  position: absolute;
+  top: 16px; left: 0; right: 0;
+  height: 3px;
+  background: repeating-linear-gradient(90deg, #c9a96e 0, #c9a96e 8px, transparent 8px, transparent 14px);
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+  align-items: start;
+}
+
+.sticky-note {
+  background: var(--yellow);
+  padding: 1.5rem 1.4rem 1.2rem;
+  border-radius: 4px 4px 4px 4px;
+  box-shadow: 4px 6px 16px rgba(74,46,46,0.14), inset 0 -2px 6px rgba(0,0,0,0.04);
+  position: relative;
+  transform: rotate(-2deg);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  font-family: var(--font-sub);
+  /* top fold */
+}
+.sticky-note::before {
+  content: '';
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 22px;
+  background: #c9a96e;
+}
+.sticky-note::after {
+  content: '';
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #b8865e;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.sticky-note:nth-child(1) { background: var(--yellow); transform: rotate(-2deg); }
+.sticky-note:nth-child(2) { background: var(--pink); transform: rotate(1.5deg); }
+.sticky-note:nth-child(3) { background: var(--mint); transform: rotate(-1deg); }
+.sticky-note:nth-child(4) { background: var(--lavender); transform: rotate(2.5deg); }
+
+.sticky-note:hover {
+  transform: rotate(0deg) scale(1.05) translateY(-6px) !important;
+  box-shadow: 8px 14px 24px rgba(74,46,46,0.18);
+}
+
+.sticky-quote {
+  font-size: 0.98rem;
+  color: var(--brown);
+  line-height: 1.7;
+  margin-bottom: 0.9rem;
+  font-style: italic;
+}
+.sticky-author {
+  font-size: 0.88rem;
+  color: var(--brown-light);
+  font-weight: bold;
+}
+.sticky-stars { font-size: 0.85rem; margin-bottom: 0.4rem; letter-spacing: 1px; }
+
+/* ============================================================
+   FOOTER
+============================================================ */
+footer {
+  background: var(--pink);
+  padding: 3rem 2rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-meadow {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  pointer-events: none;
+}
+
+.footer-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.footer-logo {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  color: var(--brown);
+  margin-bottom: 1rem;
+}
+
+.footer-closing {
+  font-family: var(--font-sub);
+  font-size: 1.15rem;
+  color: var(--brown-light);
+  margin-bottom: 1.5rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.footer-links a {
+  font-family: var(--font-sub);
+  font-size: 0.95rem;
+  color: var(--brown);
+  text-decoration: none;
+  background: rgba(255,255,255,0.5);
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  transition: background 0.2s, transform 0.2s;
+}
+.footer-links a:hover { background: rgba(255,255,255,0.85); transform: translateY(-2px); }
+
+.footer-copy {
+  font-size: 0.82rem;
+  color: var(--brown-light);
+  font-family: var(--font-body);
+  padding-bottom: 80px;
+}
+
+/* ============================================================
+   UTILITY
+============================================================ */
+.text-center { text-align: center; }
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div id="cursor">
+  <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M14 3 L15.8 10.2 L23 11 L17.6 16.2 L19.1 23.5 L14 19.8 L8.9 23.5 L10.4 16.2 L5 11 L12.2 10.2 Z" fill="#FDE68A" stroke="#d4a843" stroke-width="1.5" stroke-linejoin="round"/>
+  </svg>
+</div>
+
+<!-- ==================== NAV ==================== -->
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">🌸 Jojo's Cares</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="nav-links">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#availability">Book</a>
+      <a href="#testimonials">Families</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<section id="hero">
+  <!-- Butterflies -->
+  <div class="butterfly" style="top:28%">
+    <svg width="42" height="32" viewBox="0 0 42 32"><path d="M21 16 Q10 2 2 8 Q0 16 10 20 Q16 22 21 16Z" fill="#F7C5D0" stroke="#e8a0b8" stroke-width="1.5"/><path d="M21 16 Q32 2 40 8 Q42 16 32 20 Q26 22 21 16Z" fill="#DDD0F0" stroke="#c4a8d8" stroke-width="1.5"/><path d="M21 16 Q12 20 10 28 Q14 30 18 24 Q20 20 21 16Z" fill="#F7C5D0" stroke="#e8a0b8" stroke-width="1.2"/><path d="M21 16 Q30 20 32 28 Q28 30 24 24 Q22 20 21 16Z" fill="#DDD0F0" stroke="#c4a8d8" stroke-width="1.2"/></svg>
+  </div>
+  <div class="butterfly" style="top:55%">
+    <svg width="36" height="28" viewBox="0 0 42 32"><path d="M21 16 Q10 2 2 8 Q0 16 10 20 Q16 22 21 16Z" fill="#B8E8D0" stroke="#88ccaa" stroke-width="1.5"/><path d="M21 16 Q32 2 40 8 Q42 16 32 20 Q26 22 21 16Z" fill="#FDE68A" stroke="#d4b060" stroke-width="1.5"/><path d="M21 16 Q12 20 10 28 Q14 30 18 24 Q20 20 21 16Z" fill="#B8E8D0" stroke="#88ccaa" stroke-width="1.2"/><path d="M21 16 Q30 20 32 28 Q28 30 24 24 Q22 20 21 16Z" fill="#FDE68A" stroke="#d4b060" stroke-width="1.2"/></svg>
+  </div>
+  <div class="butterfly" style="top:42%">
+    <svg width="30" height="24" viewBox="0 0 42 32"><path d="M21 16 Q10 2 2 8 Q0 16 10 20 Q16 22 21 16Z" fill="#F9A89A" stroke="#d08070" stroke-width="1.5"/><path d="M21 16 Q32 2 40 8 Q42 16 32 20 Q26 22 21 16Z" fill="#F7C5D0" stroke="#e8a0b8" stroke-width="1.5"/><path d="M21 16 Q12 20 10 28 Q14 30 18 24 Q20 20 21 16Z" fill="#F9A89A" stroke="#d08070" stroke-width="1.2"/><path d="M21 16 Q30 20 32 28 Q28 30 24 24 Q22 20 21 16Z" fill="#F7C5D0" stroke="#e8a0b8" stroke-width="1.2"/></svg>
+  </div>
+
+  <!-- Clouds -->
+  <div class="hero-float float-cloud1">
+    <svg width="120" height="60" viewBox="0 0 120 60"><path d="M20 50 Q5 50 5 38 Q5 28 16 26 Q16 10 32 10 Q42 2 54 12 Q64 4 76 12 Q90 10 94 24 Q106 22 108 34 Q112 50 96 50 Z" fill="white" stroke="#d4e8f4" stroke-width="2" fill-opacity="0.85"/></svg>
+  </div>
+  <div class="hero-float float-cloud2">
+    <svg width="90" height="46" viewBox="0 0 120 60"><path d="M20 50 Q5 50 5 38 Q5 28 16 26 Q16 10 32 10 Q42 2 54 12 Q64 4 76 12 Q90 10 94 24 Q106 22 108 34 Q112 50 96 50 Z" fill="white" stroke="#d4e8f4" stroke-width="2" fill-opacity="0.75"/></svg>
+  </div>
+
+  <!-- Sun -->
+  <div class="hero-float float-sun">
+    <svg width="90" height="90" viewBox="0 0 90 90">
+      <circle cx="45" cy="45" r="26" fill="#FDE68A" stroke="#d4a843" stroke-width="3"/>
+      <path d="M45 5 Q47 12 45 19" stroke="#d4a843" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M45 71 Q47 78 45 85" stroke="#d4a843" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M5 45 Q12 47 19 45" stroke="#d4a843" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M71 45 Q78 47 85 45" stroke="#d4a843" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M16 16 Q21 22 26 26" stroke="#d4a843" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M64 64 Q69 70 74 74" stroke="#d4a843" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M74 16 Q69 22 64 26" stroke="#d4a843" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M16 74 Q21 70 26 64" stroke="#d4a843" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="38" cy="40" r="4" fill="#c8860a" opacity="0.5"/>
+      <circle cx="52" cy="40" r="4" fill="#c8860a" opacity="0.5"/>
+      <path d="M38 52 Q45 58 52 52" stroke="#c8860a" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    </svg>
+  </div>
+
+  <!-- Rainbow -->
+  <div class="hero-float float-rainbow">
+    <svg width="130" height="80" viewBox="0 0 130 80">
+      <path d="M10 75 Q10 20 65 20 Q120 20 120 75" stroke="#F9A89A" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <path d="M20 75 Q20 32 65 32 Q110 32 110 75" stroke="#FDE68A" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <path d="M30 75 Q30 44 65 44 Q100 44 100 75" stroke="#B8E8D0" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <path d="M40 75 Q40 54 65 54 Q90 54 90 75" stroke="#DDD0F0" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <ellipse cx="10" cy="76" rx="8" ry="5" fill="white" opacity="0.7"/>
+      <ellipse cx="120" cy="76" rx="8" ry="5" fill="white" opacity="0.7"/>
+    </svg>
+  </div>
+
+  <!-- Daisies -->
+  <div class="hero-float float-daisy1">
+    <svg width="60" height="60" viewBox="0 0 60 60">
+      <circle cx="30" cy="30" r="7" fill="#FDE68A"/>
+      <ellipse cx="30" cy="12" rx="5" ry="10" fill="white" stroke="#e8d4b0" stroke-width="1.5"/>
+      <ellipse cx="30" cy="12" rx="5" ry="10" fill="white" stroke="#e8d4b0" stroke-width="1.5" transform="rotate(45 30 30)"/>
+      <ellipse cx="30" cy="12" rx="5" ry="10" fill="white" stroke="#e8d4b0" stroke-width="1.5" transform="rotate(90 30 30)"/>
+      <ellipse cx="30" cy="12" rx="5" ry="10" fill="white" stroke="#e8d4b0" stroke-width="1.5" transform="rotate(135 30 30)"/>
+    </svg>
+  </div>
+  <div class="hero-float float-daisy2">
+    <svg width="44" height="44" viewBox="0 0 60 60">
+      <circle cx="30" cy="30" r="7" fill="#F7C5D0"/>
+      <ellipse cx="30" cy="12" rx="5" ry="10" fill="white" stroke="#f0b8c8" stroke-width="1.5"/>
+      <ellipse cx="30" cy="12" rx="5" ry="10" fill="white" stroke="#f0b8c8" stroke-width="1.5" transform="rotate(45 30 30)"/>
+      <ellipse cx="30" cy="12" rx="5" ry="10" fill="white" stroke="#f0b8c8" stroke-width="1.5" transform="rotate(90 30 30)"/>
+      <ellipse cx="30" cy="12" rx="5" ry="10" fill="white" stroke="#f0b8c8" stroke-width="1.5" transform="rotate(135 30 30)"/>
+    </svg>
+  </div>
+  <div class="hero-float float-star1">
+    <svg width="38" height="38" viewBox="0 0 28 28">
+      <path d="M14 3 L15.8 10.2 L23 11 L17.6 16.2 L19.1 23.5 L14 19.8 L8.9 23.5 L10.4 16.2 L5 11 L12.2 10.2 Z" fill="#DDD0F0" stroke="#b8a0d8" stroke-width="1.5" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <!-- Moon -->
+  <div class="hero-float float-moon">
+    <svg width="50" height="50" viewBox="0 0 50 50">
+      <path d="M28 8 Q14 10 10 25 Q8 40 22 46 Q10 42 8 28 Q6 14 18 8 Z" fill="#DDD0F0" stroke="#b8a0d8" stroke-width="2" stroke-linejoin="round"/>
+      <circle cx="32" cy="14" r="2" fill="#b8a0d8" opacity="0.6"/>
+      <circle cx="36" cy="28" r="1.5" fill="#b8a0d8" opacity="0.5"/>
+    </svg>
+  </div>
+
+  <!-- Big flower -->
+  <div class="hero-float float-flower-big">
+    <svg width="110" height="110" viewBox="0 0 110 110">
+      <!-- Stem -->
+      <path d="M55 95 Q52 80 55 65" stroke="#88cc99" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <!-- Leaves -->
+      <path d="M55 82 Q42 76 38 68 Q48 68 55 82Z" fill="#B8E8D0" stroke="#88cc99" stroke-width="1.5"/>
+      <path d="M55 76 Q68 70 72 62 Q62 62 55 76Z" fill="#B8E8D0" stroke="#88cc99" stroke-width="1.5"/>
+      <!-- Petals -->
+      <ellipse cx="55" cy="32" rx="9" ry="18" fill="#F7C5D0" stroke="#e8a0b8" stroke-width="2"/>
+      <ellipse cx="55" cy="32" rx="9" ry="18" fill="#FDE68A" stroke="#d4b060" stroke-width="2" transform="rotate(45 55 55)"/>
+      <ellipse cx="55" cy="32" rx="9" ry="18" fill="#DDD0F0" stroke="#b8a0d8" stroke-width="2" transform="rotate(90 55 55)"/>
+      <ellipse cx="55" cy="32" rx="9" ry="18" fill="#F9A89A" stroke="#d08070" stroke-width="2" transform="rotate(135 55 55)"/>
+      <ellipse cx="55" cy="32" rx="9" ry="18" fill="#F7C5D0" stroke="#e8a0b8" stroke-width="2" transform="rotate(180 55 55)"/>
+      <ellipse cx="55" cy="32" rx="9" ry="18" fill="#FDE68A" stroke="#d4b060" stroke-width="2" transform="rotate(225 55 55)"/>
+      <ellipse cx="55" cy="32" rx="9" ry="18" fill="#DDD0F0" stroke="#b8a0d8" stroke-width="2" transform="rotate(270 55 55)"/>
+      <ellipse cx="55" cy="32" rx="9" ry="18" fill="#F9A89A" stroke="#d08070" stroke-width="2" transform="rotate(315 55 55)"/>
+      <!-- Centre -->
+      <circle cx="55" cy="55" r="14" fill="#FDE68A" stroke="#d4a843" stroke-width="2.5"/>
+      <circle cx="51" cy="51" r="2.5" fill="#c8860a" opacity="0.5"/>
+      <circle cx="59" cy="51" r="2.5" fill="#c8860a" opacity="0.5"/>
+      <path d="M50 58 Q55 63 60 58" stroke="#c8860a" stroke-width="2" stroke-linecap="round" fill="none"/>
+    </svg>
+  </div>
+
+  <!-- Hero content -->
+  <div class="hero-content">
+    <h1 class="hero-title">Jojo's Cares 🌸</h1>
+    <p class="hero-tagline">Your home in loving hands</p>
+    <div class="cta-wrap">
+      <a href="#availability" class="cta-btn">See Availability</a>
+      <div class="cta-star">
+        <svg width="30" height="30" viewBox="0 0 28 28">
+          <path d="M14 3 L15.8 10.2 L23 11 L17.6 16.2 L19.1 23.5 L14 19.8 L8.9 23.5 L10.4 16.2 L5 11 L12.2 10.2 Z" fill="#F9A89A" stroke="#d08070" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Divider hero → about -->
+<div class="divider">
+  <svg viewBox="0 0 1440 70" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,40 Q80,10 160,38 Q240,66 320,36 Q400,6 480,38 Q560,70 640,38 Q720,6 800,36 Q880,66 960,38 Q1040,10 1120,38 Q1200,66 1280,38 Q1360,10 1440,40 L1440,70 L0,70 Z" fill="#FEF9F0"/>
+  </svg>
+</div>
+
+<!-- ==================== ABOUT ==================== -->
+<section id="about">
+  <div class="bg-flowers" aria-hidden="true">
+    <svg width="100%" height="100%" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
+      <g opacity="0.6">
+        <circle cx="80" cy="80" r="6" fill="#F7C5D0"/>
+        <circle cx="80" cy="80" r="3" fill="#FDE68A"/>
+        <circle cx="200" cy="150" r="5" fill="#B8E8D0"/>
+        <circle cx="200" cy="150" r="2.5" fill="#FDE68A"/>
+        <circle cx="600" cy="100" r="7" fill="#DDD0F0"/>
+        <circle cx="600" cy="100" r="3.5" fill="#FDE68A"/>
+        <circle cx="720" cy="300" r="5" fill="#F9A89A"/>
+        <circle cx="720" cy="300" r="2.5" fill="#FDE68A"/>
+        <circle cx="100" cy="400" r="6" fill="#B8E8D0"/>
+        <circle cx="100" cy="400" r="3" fill="#FDE68A"/>
+        <circle cx="400" cy="500" r="5" fill="#F7C5D0"/>
+        <circle cx="400" cy="500" r="2.5" fill="#FDE68A"/>
+        <circle cx="650" cy="480" r="7" fill="#DDD0F0"/>
+        <circle cx="650" cy="480" r="3.5" fill="#FDE68A"/>
+      </g>
+    </svg>
+  </div>
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="section-label">✨ Meet Jojo</p>
+      <h2 class="section-heading">Hi there, I'm Jojo!</h2>
+    </div>
+    <p class="about-text reveal reveal-delay-1">
+      Remember that babysitter you absolutely adored growing up — the one who made
+      every day feel like an adventure, who knew exactly how to calm a stormy toddler
+      and had a song for every scraped knee? That's me. I've spent over five years
+      caring for children and homes across our community, bringing warmth, patience,
+      and genuine love into every family I serve. Your little ones are safe, your home
+      is treasured, and you get to breathe easy — because Jojo's got it covered. 🌷
+    </p>
+
+    <div class="badge-string-wrap reveal reveal-delay-2">
+      <div class="badge-string-line"></div>
+      <div class="badges">
+        <span class="badge">🌿 CPR Certified</span>
+        <span class="badge">🐾 Pet Friendly</span>
+        <span class="badge">🌸 5+ Years Experience</span>
+        <span class="badge">✅ Background Checked</span>
+        <span class="badge">🌙 Overnight Available</span>
+        <span class="badge">🏡 Non-Smoker</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Divider about → services -->
+<div class="divider" style="background:var(--cream)">
+  <svg viewBox="0 0 1440 70" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,35 Q120,65 240,35 Q360,5 480,38 Q600,70 720,38 Q840,6 960,38 Q1080,70 1200,38 Q1320,6 1440,35 L1440,70 L0,70 Z" fill="#E8F7F0"/>
+  </svg>
+</div>
+
+<!-- ==================== SERVICES ==================== -->
+<section id="services">
+  <div class="stars-bg" aria-hidden="true">
+    <svg width="100%" height="100%" viewBox="0 0 800 400" preserveAspectRatio="xMidYMid slice">
+      <path d="M60 40 L62 48 L70 50 L62 52 L60 60 L58 52 L50 50 L58 48 Z" fill="#DDD0F0"/>
+      <path d="M700 80 L702 88 L710 90 L702 92 L700 100 L698 92 L690 90 L698 88 Z" fill="#F7C5D0"/>
+      <path d="M200 350 L202 358 L210 360 L202 362 L200 370 L198 362 L190 360 L198 358 Z" fill="#FDE68A"/>
+      <path d="M600 300 L602 308 L610 310 L602 312 L600 320 L598 312 L590 310 L598 308 Z" fill="#B8E8D0"/>
+      <path d="M400 50 L402 58 L410 60 L402 62 L400 70 L398 62 L390 60 L398 58 Z" fill="#F9A89A"/>
+    </svg>
+  </div>
+  <div class="section-inner">
+    <div class="reveal text-center">
+      <p class="section-label">💛 What I Offer</p>
+      <h2 class="section-heading">Services & Pricing</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal reveal-delay-1">
+        <span class="service-icon">🌼</span>
+        <div class="service-name">Nannying</div>
+        <div class="service-price">$20 / hour</div>
+        <p class="service-desc">Meals, creative activities, homework help, school pickup, and all the giggles in between.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <span class="service-icon">🏡</span>
+        <div class="service-name">House Sitting</div>
+        <div class="service-price">$75 / night</div>
+        <p class="service-desc">Mail collection, plant watering, pet cuddles, and regular security checks. Your home, loved.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-3">
+        <span class="service-icon">🌙</span>
+        <div class="service-name">Overnight Care</div>
+        <div class="service-price">$150 / night</div>
+        <p class="service-desc">Full overnight stay with morning routine included — breakfast, school prep, and a warm goodbye.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Divider services → availability -->
+<div class="divider" style="background:#E8F7F0">
+  <svg viewBox="0 0 1440 70" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,30 Q90,60 180,30 Q270,0 360,35 Q450,70 540,35 Q630,0 720,35 Q810,70 900,35 Q990,0 1080,35 Q1170,70 1260,35 Q1350,0 1440,30 L1440,70 L0,70 Z" fill="#FEF9F0"/>
+  </svg>
+</div>
+
+<!-- ==================== AVAILABILITY ==================== -->
+<section id="availability">
+  <div class="section-inner">
+    <div class="reveal text-center">
+      <p class="section-label">📅 Check My Schedule</p>
+      <h2 class="section-heading">Availability — March 2026</h2>
+    </div>
+
+    <div class="calendar-wrap reveal reveal-delay-1">
+      <div class="cal-header">March 2026 🌸</div>
+      <div class="cal-weekdays">
+        <div class="cal-weekday">Sun</div>
+        <div class="cal-weekday">Mon</div>
+        <div class="cal-weekday">Tue</div>
+        <div class="cal-weekday">Wed</div>
+        <div class="cal-weekday">Thu</div>
+        <div class="cal-weekday">Fri</div>
+        <div class="cal-weekday">Sat</div>
+      </div>
+      <div class="cal-grid" id="cal-grid"></div>
+      <div class="cal-legend">
+        <span class="legend-dot" style="background:var(--mint)"></span> Available
+        <span class="legend-dot" style="background:var(--coral)"></span> Booked
+        <span class="legend-dot" style="background:var(--yellow)"></span> Tentative
+      </div>
+    </div>
+
+    <!-- Inquiry Form -->
+    <div class="form-wrap reveal reveal-delay-2">
+      <div class="form-top-bar">
+        <div class="form-ring"></div>
+        <div class="form-ring"></div>
+        <div class="form-ring"></div>
+        <div class="form-ring"></div>
+        <div class="form-ring"></div>
+      </div>
+      <div class="form-inner">
+        <p class="form-title">Send Jojo a Note 📝</p>
+        <form id="inquiry-form" action="https://formspree.io/f/xjgareqb" method="POST">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" name="name" placeholder="e.g. The Smith Family" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="you@email.com" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="service">Service Type</label>
+              <select id="service" name="service" required>
+                <option value="">Choose a service…</option>
+                <option value="nanny">🌼 Nannying ($20/hr)</option>
+                <option value="house">🏡 House Sitting ($75/night)</option>
+                <option value="overnight">🌙 Overnight Care ($150/night)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="dates">Dates Needed</label>
+              <input type="text" id="dates" name="dates" placeholder="e.g. March 20–22">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Tell Jojo a little about your family and what you need…"></textarea>
+          </div>
+          <button type="submit" class="submit-btn">
+            <svg width="22" height="22" viewBox="0 0 22 22"><path d="M3 11 L11 3 L19 11" stroke="#4A2E2E" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M11 3 L11 19" stroke="#4A2E2E" stroke-width="2.5" stroke-linecap="round"/></svg>
+            Send My Note 🌷
+          </button>
+        </form>
+        <div class="success-msg" id="success-msg">Yay! Jojo will be in touch soon 🌷</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Divider availability → testimonials -->
+<div class="divider" style="background:var(--cream)">
+  <svg viewBox="0 0 1440 70" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,45 Q60,15 120,45 Q180,75 240,45 Q300,15 360,45 Q420,75 480,45 Q540,15 600,45 Q660,75 720,45 Q780,15 840,45 Q900,75 960,45 Q1020,15 1080,45 Q1140,75 1200,45 Q1260,15 1320,45 Q1380,75 1440,45 L1440,70 L0,70 Z" fill="#EAF4FB"/>
+  </svg>
+</div>
+
+<!-- ==================== TESTIMONIALS ==================== -->
+<section id="testimonials">
+  <div class="section-inner">
+    <div class="reveal text-center">
+      <p class="section-label">💬 From the Families</p>
+      <h2 class="section-heading">What Families Say</h2>
+    </div>
+
+    <div class="garland reveal reveal-delay-1">
+      <div class="garland-line"></div>
+      <div style="height:32px"></div>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="sticky-note reveal reveal-delay-1">
+        <div class="sticky-stars">⭐⭐⭐⭐⭐</div>
+        <p class="sticky-quote">"Jojo is an absolute gem — our kids ask for her by name every single weekend!"</p>
+        <div class="sticky-author">— The Martinez Family</div>
+      </div>
+      <div class="sticky-note reveal reveal-delay-2">
+        <div class="sticky-stars">⭐⭐⭐⭐⭐</div>
+        <p class="sticky-quote">"Came home to a spotless house and two very happy pets. Honestly? 10/10."</p>
+        <div class="sticky-author">— Rachel K.</div>
+      </div>
+      <div class="sticky-note reveal reveal-delay-3">
+        <div class="sticky-stars">⭐⭐⭐⭐⭐</div>
+        <p class="sticky-quote">"So kind and wonderfully professional. We trust her completely with our home and hearts."</p>
+        <div class="sticky-author">— The Nguyen Family</div>
+      </div>
+      <div class="sticky-note reveal reveal-delay-4">
+        <div class="sticky-stars">⭐⭐⭐⭐⭐</div>
+        <p class="sticky-quote">"Our toddler cried when Jojo had to leave. If that doesn't say it all, I don't know what does!"</p>
+        <div class="sticky-author">— Amanda S.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Divider testimonials → footer -->
+<div class="divider" style="background:var(--sky)">
+  <svg viewBox="0 0 1440 70" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,20 C200,60 400,0 600,40 C800,80 1000,10 1200,45 C1300,62 1380,30 1440,20 L1440,70 L0,70 Z" fill="#F7C5D0"/>
+  </svg>
+</div>
+
+<!-- ==================== FOOTER ==================== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">🌸 Jojo's Cares</div>
+    <p class="footer-closing">Spreading care like wildflowers 🌻</p>
+    <div class="footer-links">
+      <a href="mailto:stockton1229@gmail.com">✉️ stockton1229@gmail.com</a>
+      <a href="tel:+17376103374">📞 +1 (737) 610-3374</a>
+      <a href="https://instagram.com/jojoscares" target="_blank">📸 @jojoscares</a>
+    </div>
+    <p class="footer-copy">© 2026 Jojo's Cares · Made with love 🌷</p>
+  </div>
+
+  <!-- Meadow of flowers along the bottom -->
+  <div class="footer-meadow">
+    <svg viewBox="0 0 1440 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block;width:100%">
+      <!-- Grass blades -->
+      <path d="M0 90 Q5 60 10 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <path d="M15 90 Q22 55 28 90" stroke="#B8E8D0" stroke-width="2.5" fill="none"/>
+      <path d="M35 90 Q38 68 42 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <path d="M50 90 Q55 50 60 90" stroke="#88ccaa" stroke-width="2" fill="none"/>
+      <path d="M70 90 Q74 62 78 90" stroke="#B8E8D0" stroke-width="2.5" fill="none"/>
+      <path d="M85 90 Q90 58 95 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <path d="M105 90 Q110 65 114 90" stroke="#88ccaa" stroke-width="2" fill="none"/>
+      <path d="M120 90 Q126 52 132 90" stroke="#B8E8D0" stroke-width="2.5" fill="none"/>
+      <path d="M140 90 Q144 66 148 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <!-- Flowers scattered -->
+      <!-- Flower 1 -->
+      <circle cx="20" cy="72" r="5" fill="#FDE68A"/>
+      <ellipse cx="20" cy="60" rx="3.5" ry="7" fill="white"/>
+      <ellipse cx="20" cy="60" rx="3.5" ry="7" fill="white" transform="rotate(60 20 72)"/>
+      <ellipse cx="20" cy="60" rx="3.5" ry="7" fill="white" transform="rotate(120 20 72)"/>
+      <!-- Flower 2 -->
+      <circle cx="75" cy="70" r="5" fill="#F7C5D0"/>
+      <ellipse cx="75" cy="58" rx="3.5" ry="7" fill="white"/>
+      <ellipse cx="75" cy="58" rx="3.5" ry="7" fill="white" transform="rotate(60 75 70)"/>
+      <ellipse cx="75" cy="58" rx="3.5" ry="7" fill="white" transform="rotate(120 75 70)"/>
+      <!-- Flower 3 -->
+      <circle cx="130" cy="68" r="5" fill="#B8E8D0"/>
+      <ellipse cx="130" cy="56" rx="3.5" ry="7" fill="white"/>
+      <ellipse cx="130" cy="56" rx="3.5" ry="7" fill="white" transform="rotate(60 130 68)"/>
+      <ellipse cx="130" cy="56" rx="3.5" ry="7" fill="white" transform="rotate(120 130 68)"/>
+      <!-- Repeat pattern across width -->
+      <use href="#" x="160" y="0"/>
+      <!-- More grass + flowers continuing across -->
+      <path d="M200 90 Q205 55 210 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <path d="M220 90 Q228 60 235 90" stroke="#88ccaa" stroke-width="2.5" fill="none"/>
+      <path d="M245 90 Q249 68 254 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <circle cx="215" cy="70" r="5" fill="#FDE68A"/>
+      <ellipse cx="215" cy="58" rx="3.5" ry="7" fill="white"/>
+      <ellipse cx="215" cy="58" rx="3.5" ry="7" fill="white" transform="rotate(60 215 70)"/>
+      <ellipse cx="215" cy="58" rx="3.5" ry="7" fill="white" transform="rotate(120 215 70)"/>
+      <path d="M270 90 Q276 52 282 90" stroke="#B8E8D0" stroke-width="2.5" fill="none"/>
+      <path d="M292 90 Q296 65 300 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <circle cx="285" cy="72" r="5" fill="#DDD0F0"/>
+      <ellipse cx="285" cy="60" rx="3.5" ry="7" fill="white"/>
+      <ellipse cx="285" cy="60" rx="3.5" ry="7" fill="white" transform="rotate(60 285 72)"/>
+      <ellipse cx="285" cy="60" rx="3.5" ry="7" fill="white" transform="rotate(120 285 72)"/>
+      <path d="M320 90 Q325 58 330 90" stroke="#88ccaa" stroke-width="2" fill="none"/>
+      <path d="M340 90 Q345 65 350 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <circle cx="345" cy="68" r="5" fill="#F9A89A"/>
+      <ellipse cx="345" cy="56" rx="3.5" ry="7" fill="white"/>
+      <ellipse cx="345" cy="56" rx="3.5" ry="7" fill="white" transform="rotate(60 345 68)"/>
+      <ellipse cx="345" cy="56" rx="3.5" ry="7" fill="white" transform="rotate(120 345 68)"/>
+      <path d="M370 90 Q376 55 382 90" stroke="#B8E8D0" stroke-width="2.5" fill="none"/>
+      <path d="M392 90 Q396 68 400 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <circle cx="380" cy="72" r="5" fill="#FDE68A"/>
+      <ellipse cx="380" cy="60" rx="3.5" ry="7" fill="white"/>
+      <ellipse cx="380" cy="60" rx="3.5" ry="7" fill="white" transform="rotate(60 380 72)"/>
+      <ellipse cx="380" cy="60" rx="3.5" ry="7" fill="white" transform="rotate(120 380 72)"/>
+      <path d="M420 90 Q428 52 435 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <path d="M445 90 Q449 65 453 90" stroke="#88ccaa" stroke-width="2.5" fill="none"/>
+      <circle cx="440" cy="69" r="5" fill="#F7C5D0"/>
+      <ellipse cx="440" cy="57" rx="3.5" ry="7" fill="white"/>
+      <ellipse cx="440" cy="57" rx="3.5" ry="7" fill="white" transform="rotate(60 440 69)"/>
+      <ellipse cx="440" cy="57" rx="3.5" ry="7" fill="white" transform="rotate(120 440 69)"/>
+      <path d="M470 90 Q476 60 482 90" stroke="#B8E8D0" stroke-width="2.5" fill="none"/>
+      <path d="M495 90 Q500 55 506 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <circle cx="500" cy="71" r="5" fill="#B8E8D0"/>
+      <ellipse cx="500" cy="59" rx="3.5" ry="7" fill="white"/>
+      <ellipse cx="500" cy="59" rx="3.5" ry="7" fill="white" transform="rotate(60 500 71)"/>
+      <ellipse cx="500" cy="59" rx="3.5" ry="7" fill="white" transform="rotate(120 500 71)"/>
+      <path d="M520 90 Q526 63 532 90" stroke="#88ccaa" stroke-width="2" fill="none"/>
+      <path d="M544 90 Q548 68 553 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <circle cx="555" cy="66" r="5" fill="#DDD0F0"/>
+      <ellipse cx="555" cy="54" rx="3.5" ry="7" fill="white"/>
+      <ellipse cx="555" cy="54" rx="3.5" ry="7" fill="white" transform="rotate(60 555 66)"/>
+      <ellipse cx="555" cy="54" rx="3.5" ry="7" fill="white" transform="rotate(120 555 66)"/>
+      <path d="M575 90 Q582 56 588 90" stroke="#B8E8D0" stroke-width="2.5" fill="none"/>
+      <path d="M600 90 Q605 65 610 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <circle cx="608" cy="70" r="5" fill="#F9A89A"/>
+      <ellipse cx="608" cy="58" rx="3.5" ry="7" fill="white"/>
+      <ellipse cx="608" cy="58" rx="3.5" ry="7" fill="white" transform="rotate(60 608 70)"/>
+      <ellipse cx="608" cy="58" rx="3.5" ry="7" fill="white" transform="rotate(120 608 70)"/>
+      <path d="M625 90 Q630 58 636 90" stroke="#88ccaa" stroke-width="2" fill="none"/>
+      <path d="M645 90 Q650 64 655 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <circle cx="650" cy="72" r="5" fill="#FDE68A"/>
+      <ellipse cx="650" cy="60" rx="3.5" ry="7" fill="white"/>
+      <ellipse cx="650" cy="60" rx="3.5" ry="7" fill="white" transform="rotate(60 650 72)"/>
+      <ellipse cx="650" cy="60" rx="3.5" ry="7" fill="white" transform="rotate(120 650 72)"/>
+      <path d="M670 90 Q678 54 684 90" stroke="#B8E8D0" stroke-width="2.5" fill="none"/>
+      <path d="M698 90 Q702 67 707 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <circle cx="695" cy="67" r="5" fill="#F7C5D0"/>
+      <ellipse cx="695" cy="55" rx="3.5" ry="7" fill="white"/>
+      <ellipse cx="695" cy="55" rx="3.5" ry="7" fill="white" transform="rotate(60 695 67)"/>
+      <ellipse cx="695" cy="55" rx="3.5" ry="7" fill="white" transform="rotate(120 695 67)"/>
+      <path d="M720 90 Q726 60 732 90" stroke="#88ccaa" stroke-width="2" fill="none"/>
+      <path d="M742 90 Q746 65 750 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <circle cx="750" cy="71" r="5" fill="#B8E8D0"/>
+      <ellipse cx="750" cy="59" rx="3.5" ry="7" fill="white"/>
+      <ellipse cx="750" cy="59" rx="3.5" ry="7" fill="white" transform="rotate(60 750 71)"/>
+      <ellipse cx="750" cy="59" rx="3.5" ry="7" fill="white" transform="rotate(120 750 71)"/>
+      <path d="M770 90 Q776 56 782 90" stroke="#B8E8D0" stroke-width="2.5" fill="none"/>
+      <path d="M795 90 Q800 63 805 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <circle cx="800" cy="69" r="5" fill="#DDD0F0"/>
+      <ellipse cx="800" cy="57" rx="3.5" ry="7" fill="white"/>
+      <ellipse cx="800" cy="57" rx="3.5" ry="7" fill="white" transform="rotate(60 800 69)"/>
+      <ellipse cx="800" cy="57" rx="3.5" ry="7" fill="white" transform="rotate(120 800 69)"/>
+      <path d="M825 90 Q830 55 836 90" stroke="#88ccaa" stroke-width="2" fill="none"/>
+      <path d="M848 90 Q853 65 858 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <circle cx="855" cy="68" r="5" fill="#F9A89A"/>
+      <ellipse cx="855" cy="56" rx="3.5" ry="7" fill="white"/>
+      <ellipse cx="855" cy="56" rx="3.5" ry="7" fill="white" transform="rotate(60 855 68)"/>
+      <ellipse cx="855" cy="56" rx="3.5" ry="7" fill="white" transform="rotate(120 855 68)"/>
+      <path d="M875 90 Q882 58 888 90" stroke="#B8E8D0" stroke-width="2.5" fill="none"/>
+      <path d="M900 90 Q904 66 908 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <circle cx="905" cy="72" r="5" fill="#FDE68A"/>
+      <ellipse cx="905" cy="60" rx="3.5" ry="7" fill="white"/>
+      <ellipse cx="905" cy="60" rx="3.5" ry="7" fill="white" transform="rotate(60 905 72)"/>
+      <ellipse cx="905" cy="60" rx="3.5" ry="7" fill="white" transform="rotate(120 905 72)"/>
+      <path d="M925 90 Q932 54 938 90" stroke="#88ccaa" stroke-width="2" fill="none"/>
+      <path d="M950 90 Q955 66 960 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <circle cx="960" cy="70" r="5" fill="#F7C5D0"/>
+      <ellipse cx="960" cy="58" rx="3.5" ry="7" fill="white"/>
+      <ellipse cx="960" cy="58" rx="3.5" ry="7" fill="white" transform="rotate(60 960 70)"/>
+      <ellipse cx="960" cy="58" rx="3.5" ry="7" fill="white" transform="rotate(120 960 70)"/>
+      <path d="M978 90 Q984 60 990 90" stroke="#B8E8D0" stroke-width="2.5" fill="none"/>
+      <path d="M1002 90 Q1007 55 1013 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <circle cx="1010" cy="68" r="5" fill="#B8E8D0"/>
+      <ellipse cx="1010" cy="56" rx="3.5" ry="7" fill="white"/>
+      <ellipse cx="1010" cy="56" rx="3.5" ry="7" fill="white" transform="rotate(60 1010 68)"/>
+      <ellipse cx="1010" cy="56" rx="3.5" ry="7" fill="white" transform="rotate(120 1010 68)"/>
+      <path d="M1030 90 Q1036 62 1042 90" stroke="#88ccaa" stroke-width="2" fill="none"/>
+      <path d="M1055 90 Q1059 68 1063 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <circle cx="1060" cy="72" r="5" fill="#DDD0F0"/>
+      <ellipse cx="1060" cy="60" rx="3.5" ry="7" fill="white"/>
+      <ellipse cx="1060" cy="60" rx="3.5" ry="7" fill="white" transform="rotate(60 1060 72)"/>
+      <ellipse cx="1060" cy="60" rx="3.5" ry="7" fill="white" transform="rotate(120 1060 72)"/>
+      <path d="M1080 90 Q1087 56 1094 90" stroke="#B8E8D0" stroke-width="2.5" fill="none"/>
+      <path d="M1108 90 Q1113 64 1118 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <circle cx="1115" cy="70" r="5" fill="#F9A89A"/>
+      <ellipse cx="1115" cy="58" rx="3.5" ry="7" fill="white"/>
+      <ellipse cx="1115" cy="58" rx="3.5" ry="7" fill="white" transform="rotate(60 1115 70)"/>
+      <ellipse cx="1115" cy="58" rx="3.5" ry="7" fill="white" transform="rotate(120 1115 70)"/>
+      <path d="M1135 90 Q1140 58 1146 90" stroke="#88ccaa" stroke-width="2" fill="none"/>
+      <path d="M1158 90 Q1163 65 1168 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <circle cx="1165" cy="68" r="5" fill="#FDE68A"/>
+      <ellipse cx="1165" cy="56" rx="3.5" ry="7" fill="white"/>
+      <ellipse cx="1165" cy="56" rx="3.5" ry="7" fill="white" transform="rotate(60 1165 68)"/>
+      <ellipse cx="1165" cy="56" rx="3.5" ry="7" fill="white" transform="rotate(120 1165 68)"/>
+      <path d="M1185 90 Q1192 54 1198 90" stroke="#B8E8D0" stroke-width="2.5" fill="none"/>
+      <path d="M1210 90 Q1215 63 1220 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <circle cx="1218" cy="71" r="5" fill="#F7C5D0"/>
+      <ellipse cx="1218" cy="59" rx="3.5" ry="7" fill="white"/>
+      <ellipse cx="1218" cy="59" rx="3.5" ry="7" fill="white" transform="rotate(60 1218 71)"/>
+      <ellipse cx="1218" cy="59" rx="3.5" ry="7" fill="white" transform="rotate(120 1218 71)"/>
+      <path d="M1238 90 Q1244 57 1250 90" stroke="#88ccaa" stroke-width="2" fill="none"/>
+      <path d="M1264 90 Q1268 66 1273 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <circle cx="1270" cy="70" r="5" fill="#B8E8D0"/>
+      <ellipse cx="1270" cy="58" rx="3.5" ry="7" fill="white"/>
+      <ellipse cx="1270" cy="58" rx="3.5" ry="7" fill="white" transform="rotate(60 1270 70)"/>
+      <ellipse cx="1270" cy="58" rx="3.5" ry="7" fill="white" transform="rotate(120 1270 70)"/>
+      <path d="M1290 90 Q1296 60 1302 90" stroke="#B8E8D0" stroke-width="2.5" fill="none"/>
+      <path d="M1315 90 Q1320 55 1326 90" stroke="#88ccaa" stroke-width="3" fill="none"/>
+      <circle cx="1322" cy="68" r="5" fill="#DDD0F0"/>
+      <ellipse cx="1322" cy="56" rx="3.5" ry="7" fill="white"/>
+      <ellipse cx="1322" cy="56" rx="3.5" ry="7" fill="white" transform="rotate(60 1322 68)"/>
+      <ellipse cx="1322" cy="56" rx="3.5" ry="7" fill="white" transform="rotate(120 1322 68)"/>
+      <path d="M1345 90 Q1350 63 1356 90" stroke="#B8E8D0" stroke-width="2.5" fill="none"/>
+      <path d="M1368 90 Q1373 57 1378 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+      <circle cx="1375" cy="71" r="5" fill="#F9A89A"/>
+      <ellipse cx="1375" cy="59" rx="3.5" ry="7" fill="white"/>
+      <ellipse cx="1375" cy="59" rx="3.5" ry="7" fill="white" transform="rotate(60 1375 71)"/>
+      <ellipse cx="1375" cy="59" rx="3.5" ry="7" fill="white" transform="rotate(120 1375 71)"/>
+      <path d="M1398 90 Q1404 60 1410 90" stroke="#88ccaa" stroke-width="2" fill="none"/>
+      <path d="M1424 90 Q1428 65 1432 90" stroke="#B8E8D0" stroke-width="3" fill="none"/>
+    </svg>
+  </div>
+</footer>
+
+<script>
+// ============================================================
+//  CURSOR
+// ============================================================
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top  = e.clientY + 'px';
+});
+document.addEventListener('mouseleave', () => cursor.style.opacity = '0');
+document.addEventListener('mouseenter', () => cursor.style.opacity = '1');
+
+// ============================================================
+//  NAV HAMBURGER
+// ============================================================
+const hamburger = document.getElementById('hamburger');
+const navLinks  = document.getElementById('nav-links');
+hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+document.addEventListener('click', e => {
+  if (!e.target.closest('nav')) navLinks.classList.remove('open');
+});
+
+// ============================================================
+//  CALENDAR — live from Google Sheets
+// ============================================================
+(async function buildCalendar() {
+  const CSV_URL = 'https://script.google.com/macros/s/AKfycbzrfDfaVp6TA1um71RWWNjgNVmMvvsT-6x4Dx92iXSo0Wx5V44vrPTQ_vi1bEaBp4SX/exec';
+
+  const grid   = document.getElementById('cal-grid');
+  const header = document.querySelector('.cal-header');
+
+  // Show loading state
+  grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;font-family:var(--font-sub);color:var(--brown-light)">Loading calendar… 🌸</div>';
+
+  let states = {};
+  let year, month; // 0-indexed month
+
+  try {
+    const res  = await fetch(CSV_URL);
+    const json = await res.json();
+
+    json.forEach(row => {
+      if (!row.date || !row.status) return;
+      const d = new Date(row.date);
+      if (isNaN(d)) return;
+      if (year === undefined) {
+        year  = d.getFullYear();
+        month = d.getMonth();
+      }
+      states[d.getDate()] = row.status.toLowerCase();
+    });
+  } catch (e) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;font-family:var(--font-sub);color:var(--coral)">Couldn\'t load calendar — please check back soon 🌷</div>';
+    return;
+  }
+
+  // Fallback to current month if sheet is empty
+  if (year === undefined) {
+    const now = new Date();
+    year  = now.getFullYear();
+    month = now.getMonth();
+  }
+
+  // Update header
+  const monthName = new Date(year, month, 1).toLocaleString('default', { month: 'long' });
+  header.textContent = `${monthName} ${year} 🌸`;
+
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const startDay    = new Date(year, month, 1).getDay();
+  const today       = new Date();
+  const todayNum    = (today.getFullYear() === year && today.getMonth() === month) ? today.getDate() : -1;
+
+  // Clear loading
+  grid.innerHTML = '';
+
+  // Empty cells before the 1st
+  for (let i = 0; i < startDay; i++) {
+    const empty = document.createElement('div');
+    empty.className = 'cal-day empty';
+    grid.appendChild(empty);
+  }
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const cell  = document.createElement('div');
+    const state = states[d] || 'available';
+    cell.className = 'cal-day ' + state + (d === todayNum ? ' today' : '');
+    cell.textContent = d;
+    cell.title = state.charAt(0).toUpperCase() + state.slice(1);
+    grid.appendChild(cell);
+  }
+})();
+
+// ============================================================
+//  FORM SUBMIT
+// ============================================================
+document.getElementById('inquiry-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const form = this;
+  const data = new FormData(form);
+  try {
+    const res = await fetch('https://formspree.io/f/xjgareqb', {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      form.style.display = 'none';
+      document.getElementById('success-msg').style.display = 'block';
+    } else {
+      alert('Hmm, something went wrong. Please email stockton1229@gmail.com directly!');
+    }
+  } catch {
+    alert('No internet connection. Please email stockton1229@gmail.com directly!');
+  }
+});
+
+// ============================================================
+//  SCROLL REVEAL (IntersectionObserver)
+// ============================================================
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+revealEls.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

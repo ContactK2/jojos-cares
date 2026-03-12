@@ -1,0 +1,12 @@
+function doGet() {
+  var id = "1HYO_ixHcD0uXnuEEolVmxpf-KDKReG_bxXGnN4UqJbk";
+  var sheet = SpreadsheetApp.openById(id).getActiveSheet();
+  var rows = sheet.getDataRange().getValues();
+  var result = [];
+  for (var i = 1; i < rows.length; i++) {
+    result.push({ date: rows[i][0], status: rows[i][1] });
+  }
+  var output = ContentService.createTextOutput(JSON.stringify(result));
+  output.setMimeType(ContentService.MimeType.JSON);
+  return output;
+}
