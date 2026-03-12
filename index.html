@@ -1482,37 +1482,21 @@ function buildCalendar(data) {
   }
 }
 
-(function loadCalendar() {
-  var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyTqXrex3P526O5yzU379JF-B6yHkRaCy6NmJdo6mHrnGw9soEQx7UJmEZYi98uvVZz/exec';
+(async function loadCalendar() {
   var grid = document.getElementById('cal-grid');
   grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;font-family:var(--font-sub);color:var(--brown-light)">Loading calendar… 🌸</div>';
 
-  console.log('[Calendar] Starting load...');
-  console.log('[Calendar] Script URL:', SCRIPT_URL + '?callback=buildCalendar');
-
-  var script = document.createElement('script');
-  script.src = SCRIPT_URL + '?callback=buildCalendar';
-
-  script.onload = function() {
-    console.log('[Calendar] Script tag loaded successfully');
-  };
-  script.onerror = function(e) {
-    console.error('[Calendar] Script tag failed to load:', e);
+  console.log('[Calendar] Fetching from /api/calendar');
+  try {
+    var res  = await fetch('/api/calendar');
+    var data = await res.json();
+    console.log('[Calendar] Got', data.length, 'rows:', data);
+    buildCalendar(data);
+  } catch(e) {
+    console.error('[Calendar] Fetch failed:', e);
     grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;font-family:var(--font-sub);color:var(--coral)">Couldn\'t load calendar — please check back soon 🌷</div>';
-  };
-
-  document.body.appendChild(script);
-  console.log('[Calendar] Script tag injected into DOM');
+  }
 })();
-
-// Wrap buildCalendar to log when it fires
-var _buildCalendar = buildCalendar;
-buildCalendar = function(data) {
-  console.log('[Calendar] buildCalendar called with', data ? data.length : 0, 'rows');
-  console.log('[Calendar] Raw data:', data);
-  _buildCalendar(data);
-  console.log('[Calendar] Done rendering');
-};
 
 // ============================================================
 //  FORM SUBMIT
