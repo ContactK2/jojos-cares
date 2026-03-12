@@ -1,12 +1,19 @@
-function doGet() {
+function doGet(e) {
   var id = "1HYO_ixHcD0uXnuEEolVmxpf-KDKReG_bxXGnN4UqJbk";
   var sheet = SpreadsheetApp.openById(id).getActiveSheet();
   var rows = sheet.getDataRange().getValues();
   var result = [];
   for (var i = 1; i < rows.length; i++) {
-    result.push({ date: rows[i][0], status: rows[i][1] });
+    if (rows[i][0] && rows[i][1]) {
+      result.push({ date: rows[i][0], status: rows[i][1] });
+    }
   }
-  var output = ContentService.createTextOutput(JSON.stringify(result));
-  output.setMimeType(ContentService.MimeType.JSON);
-  return output;
+  var json = JSON.stringify(result);
+  var callback = e && e.parameter && e.parameter.callback;
+  if (callback) {
+    return ContentService.createTextOutput(callback + "(" + json + ")")
+      .setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
+  return ContentService.createTextOutput(json)
+    .setMimeType(ContentService.MimeType.JSON);
 }

@@ -1430,73 +1430,69 @@ document.addEventListener('click', e => {
 });
 
 // ============================================================
-//  CALENDAR — live from Google Sheets
+//  CALENDAR — live from Google Sheets via JSONP
 // ============================================================
-(async function buildCalendar() {
-  const CSV_URL = 'https://script.google.com/macros/s/AKfycbzrfDfaVp6TA1um71RWWNjgNVmMvvsT-6x4Dx92iXSo0Wx5V44vrPTQ_vi1bEaBp4SX/exec';
-
+function buildCalendar(data) {
   const grid   = document.getElementById('cal-grid');
   const header = document.querySelector('.cal-header');
 
-  // Show loading state
-  grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;font-family:var(--font-sub);color:var(--brown-light)">Loading calendar… 🌸</div>';
-
   let states = {};
-  let year, month; // 0-indexed month
+  let year, month;
 
-  try {
-    const res  = await fetch(CSV_URL);
-    const json = await res.json();
+  data.forEach(function(row) {
+    if (!row.date || !row.status) return;
+    var d = new Date(row.date);
+    if (isNaN(d)) return;
+    if (year === undefined) {
+      year  = d.getFullYear();
+      month = d.getMonth();
+    }
+    states[d.getDate()] = row.status.toLowerCase();
+  });
 
-    json.forEach(row => {
-      if (!row.date || !row.status) return;
-      const d = new Date(row.date);
-      if (isNaN(d)) return;
-      if (year === undefined) {
-        year  = d.getFullYear();
-        month = d.getMonth();
-      }
-      states[d.getDate()] = row.status.toLowerCase();
-    });
-  } catch (e) {
-    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;font-family:var(--font-sub);color:var(--coral)">Couldn\'t load calendar — please check back soon 🌷</div>';
-    return;
-  }
-
-  // Fallback to current month if sheet is empty
   if (year === undefined) {
-    const now = new Date();
+    var now = new Date();
     year  = now.getFullYear();
     month = now.getMonth();
   }
 
-  // Update header
-  const monthName = new Date(year, month, 1).toLocaleString('default', { month: 'long' });
-  header.textContent = `${monthName} ${year} 🌸`;
+  var monthName = new Date(year, month, 1).toLocaleString('default', { month: 'long' });
+  header.textContent = monthName + ' ' + year + ' 🌸';
 
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const startDay    = new Date(year, month, 1).getDay();
-  const today       = new Date();
-  const todayNum    = (today.getFullYear() === year && today.getMonth() === month) ? today.getDate() : -1;
+  var daysInMonth = new Date(year, month + 1, 0).getDate();
+  var startDay    = new Date(year, month, 1).getDay();
+  var today       = new Date();
+  var todayNum    = (today.getFullYear() === year && today.getMonth() === month) ? today.getDate() : -1;
 
-  // Clear loading
   grid.innerHTML = '';
 
-  // Empty cells before the 1st
-  for (let i = 0; i < startDay; i++) {
-    const empty = document.createElement('div');
+  for (var i = 0; i < startDay; i++) {
+    var empty = document.createElement('div');
     empty.className = 'cal-day empty';
     grid.appendChild(empty);
   }
 
-  for (let d = 1; d <= daysInMonth; d++) {
-    const cell  = document.createElement('div');
-    const state = states[d] || 'available';
+  for (var d = 1; d <= daysInMonth; d++) {
+    var cell  = document.createElement('div');
+    var state = states[d] || 'available';
     cell.className = 'cal-day ' + state + (d === todayNum ? ' today' : '');
     cell.textContent = d;
     cell.title = state.charAt(0).toUpperCase() + state.slice(1);
     grid.appendChild(cell);
   }
+}
+
+(function loadCalendar() {
+  var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyTqXrex3P526O5yzU379JF-B6yHkRaCy6NmJdo6mHrnGw9soEQx7UJmEZYi98uvVZz/exec';
+  var grid = document.getElementById('cal-grid');
+  grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;font-family:var(--font-sub);color:var(--brown-light)">Loading calendar… 🌸</div>';
+
+  var script = document.createElement('script');
+  script.src = SCRIPT_URL + '?callback=buildCalendar';
+  script.onerror = function() {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;font-family:var(--font-sub);color:var(--coral)">Couldn\'t load calendar — please check back soon 🌷</div>';
+  };
+  document.body.appendChild(script);
 })();
 
 // ============================================================
