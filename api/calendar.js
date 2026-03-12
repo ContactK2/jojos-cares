@@ -1,6 +1,6 @@
 export default async function handler(req, res) {
   const SHEET_ID = '1HYO_ixHcD0uXnuEEolVmxpf-KDKReG_bxXGnN4UqJbk';
-  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&t=${Date.now()}`;
 
   try {
     const response = await fetch(url);
@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     }).filter(r => r.date && r.status);
 
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Cache-Control', 's-maxage=300');
+    res.setHeader('Cache-Control', 'no-store');
     res.json(result);
   } catch (e) {
     res.status(500).json({ error: 'Failed to fetch calendar data' });
