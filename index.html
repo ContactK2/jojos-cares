@@ -1223,7 +1223,7 @@ footer {
     <div class="footer-logo">🌸 Jojo's Cares</div>
     <p class="footer-closing">Spreading care like wildflowers 🌻</p>
     <div class="footer-links">
-      <a href="mailto:stockton1229@gmail.com">✉️ stockton1229@gmail.com</a>
+      <a href="mailto:luckeyblew22@gmail.com">✉️ luckeyblew22@gmail.com</a>
       <a href="tel:+17376103374">📞 +1 (737) 610-3374</a>
       <a href="https://instagram.com/jojoscares" target="_blank">📸 @jojoscares</a>
     </div>
@@ -1487,13 +1487,32 @@ function buildCalendar(data) {
   var grid = document.getElementById('cal-grid');
   grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;font-family:var(--font-sub);color:var(--brown-light)">Loading calendar… 🌸</div>';
 
+  console.log('[Calendar] Starting load...');
+  console.log('[Calendar] Script URL:', SCRIPT_URL + '?callback=buildCalendar');
+
   var script = document.createElement('script');
   script.src = SCRIPT_URL + '?callback=buildCalendar';
-  script.onerror = function() {
+
+  script.onload = function() {
+    console.log('[Calendar] Script tag loaded successfully');
+  };
+  script.onerror = function(e) {
+    console.error('[Calendar] Script tag failed to load:', e);
     grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;font-family:var(--font-sub);color:var(--coral)">Couldn\'t load calendar — please check back soon 🌷</div>';
   };
+
   document.body.appendChild(script);
+  console.log('[Calendar] Script tag injected into DOM');
 })();
+
+// Wrap buildCalendar to log when it fires
+var _buildCalendar = buildCalendar;
+buildCalendar = function(data) {
+  console.log('[Calendar] buildCalendar called with', data ? data.length : 0, 'rows');
+  console.log('[Calendar] Raw data:', data);
+  _buildCalendar(data);
+  console.log('[Calendar] Done rendering');
+};
 
 // ============================================================
 //  FORM SUBMIT
