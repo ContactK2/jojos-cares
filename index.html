@@ -502,7 +502,25 @@ nav {
   color: var(--brown);
   letter-spacing: 1px;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
+.cal-nav {
+  background: rgba(255,255,255,0.45);
+  border: 2.5px solid rgba(74,46,46,0.2);
+  border-radius: 50%;
+  width: 38px; height: 38px;
+  font-size: 1.1rem;
+  color: var(--brown);
+  cursor: none;
+  transition: background 0.2s, transform 0.2s;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.cal-nav:hover { background: rgba(255,255,255,0.75); transform: scale(1.1); }
+.cal-nav:disabled { opacity: 0.3; cursor: not-allowed; }
 .cal-header::after {
   content: '';
   position: absolute;
@@ -1095,7 +1113,11 @@ footer {
     </div>
 
     <div class="calendar-wrap reveal reveal-delay-1">
-      <div class="cal-header">March 2026 🌸</div>
+      <div class="cal-header">
+        <button class="cal-nav" id="cal-prev" aria-label="Previous month">&#8592;</button>
+        <span id="cal-title">Loading… 🌸</span>
+        <button class="cal-nav" id="cal-next" aria-label="Next month">&#8594;</button>
+      </div>
       <div class="cal-weekdays">
         <div class="cal-weekday">Sun</div>
         <div class="cal-weekday">Mon</div>
@@ -1432,70 +1454,98 @@ document.addEventListener('click', e => {
 // ============================================================
 //  CALENDAR — live from Google Sheets via JSONP
 // ============================================================
-function buildCalendar(data) {
-  const grid   = document.getElementById('cal-grid');
-  const header = document.querySelector('.cal-header');
-
-  let states = {};
-  let year, month;
-
-  data.forEach(function(row) {
-    if (!row.date || !row.status) return;
-    var d = new Date(row.date);
-    if (isNaN(d)) return;
-    if (year === undefined) {
-      year  = d.getFullYear();
-      month = d.getMonth();
-    }
-    states[d.getDate()] = row.status.toLowerCase();
-  });
-
-  if (year === undefined) {
-    var now = new Date();
-    year  = now.getFullYear();
-    month = now.getMonth();
-  }
-
-  var monthName = new Date(year, month, 1).toLocaleString('default', { month: 'long' });
-  header.textContent = monthName + ' ' + year + ' 🌸';
-
-  var daysInMonth = new Date(year, month + 1, 0).getDate();
-  var startDay    = new Date(year, month, 1).getDay();
-  var today       = new Date();
-  var todayNum    = (today.getFullYear() === year && today.getMonth() === month) ? today.getDate() : -1;
-
-  grid.innerHTML = '';
-
-  for (var i = 0; i < startDay; i++) {
-    var empty = document.createElement('div');
-    empty.className = 'cal-day empty';
-    grid.appendChild(empty);
-  }
-
-  for (var d = 1; d <= daysInMonth; d++) {
-    var cell  = document.createElement('div');
-    var state = states[d] || 'available';
-    cell.className = 'cal-day ' + state + (d === todayNum ? ' today' : '');
-    cell.textContent = d;
-    cell.title = state.charAt(0).toUpperCase() + state.slice(1);
-    grid.appendChild(cell);
-  }
-}
-
 (async function loadCalendar() {
-  var grid = document.getElementById('cal-grid');
+  var grid  = document.getElementById('cal-grid');
+  var title = document.getElementById('cal-title');
+  var prev  = document.getElementById('cal-prev');
+  var next  = document.getElementById('cal-next');
+
   grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;font-family:var(--font-sub);color:var(--brown-light)">Loading calendar… 🌸</div>';
 
-  console.log('[Calendar] Fetching from /api/calendar');
+  // Fetch all data
+  var allData = [];
   try {
-    var res  = await fetch('/api/calendar');
-    var data = await res.json();
-    console.log('[Calendar] Got', data.length, 'rows:', data);
-    buildCalendar(data);
+    var res = await fetch('/api/calendar');
+    allData = await res.json();
+    console.log('[Calendar] Got', allData.length, 'rows');
   } catch(e) {
     console.error('[Calendar] Fetch failed:', e);
     grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;font-family:var(--font-sub);color:var(--coral)">Couldn\'t load calendar — please check back soon 🌷</div>';
+    return;
   }
+
+  // Group data by YYYY-MM key
+  var byMonth = {};
+  allData.forEach(function(row) {
+    if (!row.date || !row.status) return;
+    var d = new Date(row.date);
+    if (isNaN(d)) return;
+    var key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+    if (!byMonth[key]) byMonth[key] = {};
+    byMonth[key][d.getDate()] = row.status.toLowerCase();
+  });
+
+  var months = Object.keys(byMonth).sort();
+  if (months.length === 0) {
+    // No data — show current month all available
+    var now = new Date();
+    var key = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+    months = [key];
+    byMonth[key] = {};
+  }
+
+  var currentIdx = 0;
+  // Default to current or nearest future month
+  var todayKey = (function() {
+    var n = new Date();
+    return n.getFullYear() + '-' + String(n.getMonth() + 1).padStart(2, '0');
+  })();
+  var futureIdx = months.findIndex(function(m) { return m >= todayKey; });
+  if (futureIdx !== -1) currentIdx = futureIdx;
+
+  function renderMonth(idx) {
+    var key    = months[idx];
+    var parts  = key.split('-');
+    var year   = parseInt(parts[0]);
+    var month  = parseInt(parts[1]) - 1;
+    var states = byMonth[key] || {};
+
+    var monthName = new Date(year, month, 1).toLocaleString('default', { month: 'long' });
+    title.textContent = monthName + ' ' + year + ' 🌸';
+
+    prev.disabled = (idx === 0);
+    next.disabled = (idx === months.length - 1);
+
+    var daysInMonth = new Date(year, month + 1, 0).getDate();
+    var startDay    = new Date(year, month, 1).getDay();
+    var today       = new Date();
+    var todayNum    = (today.getFullYear() === year && today.getMonth() === month) ? today.getDate() : -1;
+
+    grid.innerHTML = '';
+
+    for (var i = 0; i < startDay; i++) {
+      var empty = document.createElement('div');
+      empty.className = 'cal-day empty';
+      grid.appendChild(empty);
+    }
+    for (var d = 1; d <= daysInMonth; d++) {
+      var cell  = document.createElement('div');
+      var state = states[d] || 'available';
+      cell.className = 'cal-day ' + state + (d === todayNum ? ' today' : '');
+      cell.textContent = d;
+      cell.title = state.charAt(0).toUpperCase() + state.slice(1);
+      grid.appendChild(cell);
+    }
+  }
+
+  prev.addEventListener('click', function() {
+    if (currentIdx > 0) { currentIdx--; renderMonth(currentIdx); }
+  });
+  next.addEventListener('click', function() {
+    if (currentIdx < months.length - 1) { currentIdx++; renderMonth(currentIdx); }
+  });
+
+  renderMonth(currentIdx);
 })();
 
 // ============================================================
