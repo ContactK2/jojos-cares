@@ -1638,7 +1638,9 @@ document.addEventListener('click', e => {
   var byMonth = {};
   allData.forEach(function(row) {
     if (!row.date || !row.status) return;
-    var d = new Date(row.date);
+    var parts = row.date.split('-');
+    if (parts.length < 3) return;
+    var d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
     if (isNaN(d)) return;
     var key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
     if (!byMonth[key]) byMonth[key] = {};
