@@ -480,6 +480,45 @@ nav {
 .service-price { font-family: var(--font-sub); font-size: 1.15rem; color: var(--coral); margin-bottom: 0.8rem; font-weight: bold; }
 .service-desc { font-size: 0.95rem; color: var(--brown-light); line-height: 1.7; }
 
+.service-card--featured {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto auto;
+  column-gap: 1.5rem;
+  align-items: start;
+  background: linear-gradient(135deg, #FEF9F0 60%, #E8F7F0);
+  border-color: var(--mint);
+  transform: rotate(0deg) !important;
+  box-shadow: 6px 8px 0 rgba(184,232,208,0.5), 0 0 0 3px rgba(184,232,208,0.2);
+}
+.service-card--featured .service-icon { font-size: 3.8rem; grid-row: 1 / 4; align-self: center; }
+.service-card--featured .service-name { font-size: 2.2rem; }
+.service-card--featured .service-price { font-size: 1.3rem; }
+.service-features {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin-top: 0.8rem;
+  padding: 0;
+  grid-column: 2;
+}
+.service-features li {
+  font-family: var(--font-sub);
+  font-size: 0.92rem;
+  color: var(--brown-light);
+  background: rgba(184,232,208,0.3);
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+}
+
+@media (max-width: 600px) {
+  .service-card--featured { grid-template-columns: 1fr; }
+  .service-card--featured .service-icon { grid-row: auto; font-size: 2.8rem; }
+  .service-features { grid-column: 1; }
+}
+
 /* Stars background for services */
 .stars-bg {
   position: absolute;
@@ -1203,23 +1242,24 @@ footer {
       <h2 class="section-heading">Services & Pricing</h2>
     </div>
     <div class="services-grid">
-      <div class="service-card reveal reveal-delay-1">
+      <div class="service-card service-card--featured reveal reveal-delay-1">
+        <span class="service-icon">🏡</span>
+        <div class="service-name">House Sitting</div>
+        <div class="service-price">$50–$100 / day</div>
+        <p class="service-desc">Your home is in loving hands while you're away — mail collection, plant watering, pet cuddles, security checks, and all the little things that keep your home feeling lived-in and loved.</p>
+        <ul class="service-features">
+          <li>🐾 Pet care included</li>
+          <li>🌿 Plant watering</li>
+          <li>📬 Mail & packages</li>
+          <li>🔐 Security checks</li>
+          <li>🌙 Overnight stays available</li>
+        </ul>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
         <span class="service-icon">🌼</span>
         <div class="service-name">Nannying</div>
         <div class="service-price">Starting at $25 / hour</div>
         <p class="service-desc">Meals, creative activities, homework help, school pickup, and all the giggles in between.</p>
-      </div>
-      <div class="service-card reveal reveal-delay-2">
-        <span class="service-icon">🏡</span>
-        <div class="service-name">House Sitting</div>
-        <div class="service-price">$50–$100 / day</div>
-        <p class="service-desc">Mail collection, plant watering, pet cuddles, and regular security checks. Your home, loved.</p>
-      </div>
-      <div class="service-card reveal reveal-delay-3">
-        <span class="service-icon">🌙</span>
-        <div class="service-name">Overnight Care</div>
-        <div class="service-price">$50–$100 / night</div>
-        <p class="service-desc">Full overnight stay with morning routine included — breakfast, school prep, and a warm goodbye.</p>
       </div>
     </div>
   </div>
@@ -1290,9 +1330,8 @@ footer {
               <label for="service">Service Type</label>
               <select id="service" name="service" required>
                 <option value="">Choose a service…</option>
-                <option value="nanny">🌼 Nannying (Starting at $25/hr)</option>
                 <option value="house">🏡 House Sitting ($50–$100/day)</option>
-                <option value="overnight">🌙 Overnight Care ($50–$100/night)</option>
+                <option value="nanny">🌼 Nannying (Starting at $25/hr)</option>
               </select>
             </div>
             <div class="form-group">
