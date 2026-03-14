@@ -573,18 +573,20 @@ nav {
   justify-content: center;
   border-radius: 10px;
   font-family: var(--font-sub);
-  font-size: 0.95rem;
+  font-size: 1.15rem;
   color: var(--brown);
   cursor: default;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  min-height: 40px;
+  min-height: 44px;
   position: relative;
+  font-weight: bold;
 }
 .cal-day.empty { background: transparent; }
 .cal-day.available { background: var(--mint); }
 .cal-day.booked { background: var(--coral); color: #fff; }
 .cal-day.tentative { background: var(--yellow); }
 .cal-day.today { outline: 2.5px solid var(--brown); outline-offset: -2px; }
+.cal-day.past { opacity: 0.45; text-decoration: line-through; text-decoration-color: var(--brown); text-decoration-thickness: 2px; }
 .cal-day:not(.empty):hover { transform: scale(1.15); box-shadow: 0 4px 12px rgba(0,0,0,0.12); z-index: 2; }
 
 .cal-legend {
@@ -932,7 +934,7 @@ footer {
   .cal-header { font-size: 1.3rem; padding: 1rem; }
   .cal-nav { width: 32px; height: 32px; font-size: 0.95rem; }
   .cal-weekday { font-size: 0.72rem; padding: 0.5rem 0.1rem; }
-  .cal-day { font-size: 0.8rem; min-height: 34px; border-radius: 7px; }
+  .cal-day { font-size: 0.95rem; min-height: 36px; border-radius: 7px; }
   .cal-grid { gap: 3px; padding: 0.5rem; }
   .cal-legend { font-size: 0.8rem; gap: 0.6rem; padding: 0.6rem 0.8rem; }
 
@@ -1682,6 +1684,7 @@ document.addEventListener('click', e => {
     var startDay    = new Date(year, month, 1).getDay();
     var today       = new Date();
     var todayNum    = (today.getFullYear() === year && today.getMonth() === month) ? today.getDate() : -1;
+    var isPastMonth = (year < today.getFullYear()) || (year === today.getFullYear() && month < today.getMonth());
 
     grid.innerHTML = '';
 
@@ -1693,7 +1696,8 @@ document.addEventListener('click', e => {
     for (var d = 1; d <= daysInMonth; d++) {
       var cell  = document.createElement('div');
       var state = states[d] || 'available';
-      cell.className = 'cal-day ' + state + (d === todayNum ? ' today' : '');
+      var isPast = isPastMonth || (d < todayNum && todayNum !== -1);
+      cell.className = 'cal-day ' + state + (d === todayNum ? ' today' : '') + (isPast ? ' past' : '');
       cell.textContent = d;
       cell.title = state.charAt(0).toUpperCase() + state.slice(1);
       grid.appendChild(cell);
